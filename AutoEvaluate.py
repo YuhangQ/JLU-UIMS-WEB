@@ -50,16 +50,16 @@ try:
     r = s.post('http://uims.jlu.edu.cn/ntms/j_spring_security_check', data=post_data)
 
     message = re.findall('<span class="error_message" id="error_message">(.*?)</span>', r.text)
-    if message:
-        print(message[0])
-
+    
     r = s.post('http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do')
     info = json.loads(r.text)
     name = info['loginInfo']['nickName']
     t = info['groupsInfo'][0]['groupName']
 except Exception as e:
-    print("登录错误，可能是用户名或者密码错误。")
+    if message:
+        print(message[0])
     print("验证码是AI识别，也可能会有错误，请刷新页面重新试试。")
+    exit(0)
 
 if info['userType'] == 'S' or t == '学生':
     t = '同学'
