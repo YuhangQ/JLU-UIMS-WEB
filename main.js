@@ -40,5 +40,5 @@ app.post('/evaluate', (req, res)=>{
 })
 
 
-console.log("listening on 25565...")
-app.listen(25565);
+console.log("listening on 80...")
+app.listen(80);
