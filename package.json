@@ -1,0 +1,24 @@
+{
+  "name": "jlu-uims-web",
+  "version": "1.0.0",
+  "description": "一个一键评教WEB版，极简实现。",
+  "main": "main.js",
+  "dependencies": {
+    "expres": "0.0.5",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuhangQ/JLU-UIMS-WEB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YuhangQ/JLU-UIMS-WEB/issues"
+  },
+  "homepage": "https://github.com/YuhangQ/JLU-UIMS-WEB#readme"
+}

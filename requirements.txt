@@ -1,0 +1,4 @@
+## The following requirements were added by pip freeze:
+ddddocr==1.3.0
+Pillow==8.4.0
+requests==2.22.0
