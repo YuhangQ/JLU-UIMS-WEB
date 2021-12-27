@@ -123,25 +123,43 @@ count = 0
 puzzle = ''
 for course in eval_info:
     id = course['evalItemId']
+    post_data = {"evalItemId": "%s" % id}
+    post_url = 'https://uims.jlu.edu.cn/ntms/action/eval/fetch-eval-item.do'
+    r = s.post(post_url, data=json.dumps(post_data), headers=headers)
+    puzzle_info = json.loads(r.text)['items'][0]['puzzle']
+    flag = False
+
+    for classmate in classmate_list:
+        length = len(puzzle_info) if len(puzzle_info) < len(classmate) else len(classmate)
+        for i in range(length):
+            if puzzle_info[i] == '_':
+                puzzle = classmate[i]
+                cl_name = puzzle_info.replace('_', puzzle)
+
+        if cl_name == classmate:
+            flag = True
+            break
+
+    # 一般情况下均可获取到班级同学信息，可去掉 #
+    if not flag:
+        puzzle = input('请输入在下划线处对应的一个汉字，以构成一个你们班级同学的名字（%s）：' % puzzle_info)
+        classmate_list.append(puzzle_info.replace('_', puzzle))
+    ###
 
     post_url = 'http://uims.jlu.edu.cn/ntms/action/eval/eval-with-answer.do'
-
-    post_data = {
-        "evalItemId": "%s" % id,
-        "answers": {
-          "m11": "ABCDE",
-          "m12": "X"
-        },
-        "clicks": {
-          "_boot_": 0,
-          "m11": 28271,
-          "m12": 37185
-        }
-    }
-    
+    post_data = {"guidelineId": 160, "evalItemId": "%s" % id,
+                 "answers": {"p01": "A", "p02": "A", "p03": "A", "p04": "A",
+                             "p05": "A", "p06": "A", "p07": "A", "p08": "A", "p09": "A",
+                             "p10": "A", "sat11": "A", "sat12": "A", "sat13": "A", "puzzle_answer": "%s" % puzzle},
+                 "clicks": {"_boot_": 0, "p01": 49050, "p02": 50509,
+                            "p03": 52769, "p04": 54833, "p05": 58783,
+                            "p06": 61488, "p07": 62599,
+                            "p08": 64182, "p09": 68422, "p10": 70505,
+                            "sat11": 71589, "sat12": 73270, "sat13": 185638}}
     s.post(post_url, data=json.dumps(post_data), headers=headers)
     count += 1
     print(str(count) + ' - ' + course['target']['name'] + ' 老师的 ' + course['targetClar']['notes'][2:] + ' 评价完成！\n')
+
 
 print('教学质量评价已完成！')
 print('\n\n感谢您的使用！\n\n')
