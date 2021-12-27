@@ -35,7 +35,6 @@ app.post('/evaluate', (req, res)=>{
             "err": code,
             "output": output
         })
-        console.log(output)
     })
 })
 
